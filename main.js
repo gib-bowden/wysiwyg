@@ -19,6 +19,17 @@ var people = [
 	    birth: 1747,
 	    death: 1797
 	  }
+	},
+
+	{
+	  title: "Gladiator",
+	  name: "Spartacus",
+	  bio: "A Thracian soldier by origin, Spartacus was captured by the Romans and then sold as a slave. His owner owned a gladiator school in Capua and noticed the opportunity of cashing in the various skills of Spartacus as a gladiator. But a true soldier reveres his freedom far more than anything else. Soon, Spartacus helped to mastermind a rebellion that ended with about 70 gladiators escaping out of the gladiator school – all of them well-armed with makeshift weapons. Crixus was also among the escapees and soon he became the right hand of Spartacus.",
+	  image: "https://en.wikipedia.org/wiki/Spartacus#/media/File:Spartacus_II.JPG",
+	  lifespan: {
+	    birth: 111,
+	    death: 71
+	  }
 	}
 ]
 
