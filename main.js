@@ -22,10 +22,12 @@ var people = [
 	}
 ]
 
-var container = document.getElementById("container")
+var container = document.getElementById("container");
+var inputField = document.getElementById("input-field");
+var cardList = container.getElementsByClassName("card");
+var messageText = document.getElementById("message-text")
 
-
-
+//builds a card element and prints to the dom - calls the color generator to assign the card color
 function buildDom(arr) {
 	var domString = ""
 	if (arr !== []) {
@@ -35,36 +37,79 @@ function buildDom(arr) {
 								<h1>${person.title}</h1>
 								<h3>${person.name}</h3>
 								<img src="${person.image}">
-								<p>${person.bio}</p>
+								<p id="bio">${person.bio}</p>
 								<p>Birth: ${person.lifespan.birth} Death: ${person.lifespan.death}</p>
 							</div>`;
 		} 
-		container.innerHTML = domString
+		container.innerHTML = domString;
 	}
 }
 
+//takes a number and returns yellow if even, blue if odd 
 function colorGenerator(num) {
-	return (num % 2 === 0) ? "yellow" : "blue" 
+	return (num % 2 === 0) ? "yellow" : "blue";
 }
 
-
-	container.addEventListener("click", (e) => {
-	    if (e.target.classList.contains("card")) {
-			e.target.classList.toggle("dots");
-		} else if (e.target.parentNode.classList.contains("card")) {
-			e.target.parentNode.classList.toggle("dots")
+//returns a person div having the dots class 
+function findDottedPerson() {
+	for (let person of cardList) {
+		if (person.classList.contains("dots")) {
+			var dottedPerson = person;
 		}
-	});
+	} return dottedPerson;
+}
 
+//Finds the dotted person's element with the ID of a given string
+function findDottedPersonElementId(str) {
+	var personElements = findDottedPerson().children; //returns all the children elements of the dotted div
+	for (let element of personElements) {
+		if (element.id === str) {
+			var targetElement = element;
+		}
+	} return targetElement;
+}
 
-document.getElementById("input-field").addEventListener("keypress",(e) => {
-	console.log(e);
+//Event listener for the person divs 
+//adds the dots border and brings the input field in focus
+container.addEventListener("click", (e) => {
+	if (e.target.classList.contains("card")) {
+		e.target.classList.add("dots");
+	} else if (e.target.parentNode.classList.contains("card")) {
+		e.target.parentNode.classList.add("dots");
+	}
+	inputField.disabled = false;
+	messageText.innerHTML = "";
+	inputField.focus();
+});
+
+//Event listener for for the input field when it loses focus
+//Removes the dots border from a person div if exists 
+inputField.addEventListener("focusout", () => {
+	if (findDottedPerson() !== undefined) {
+		findDottedPerson().classList.remove("dots");
+		}
+	inputField.value = "";
+	})
+
+inputField.addEventListener("focusin", () => {
+	if (findDottedPerson() === undefined) {
+		messageText.innerHTML = "Select a person to edit their bio";
+		inputField.disabled = true;
+		} else {
+			inputField.value = findDottedPersonElementId("bio").innerHTML
+		}
+	})
+
+//Event listener for the input field for keypress 
+//If the keystroke is not enter -> gets the dotted person bio element and updates the innerHTML with the text field value
+//If keystroke is enter -> clears the value in the input field 
+inputField.addEventListener("keypress",(e) => {
 	if (e.key !== "Enter") {
-	console.log(e)
-	console.log(e.target.parentNode.children.container.querySelectorAll("div").indexOf("dot"))
-	// = e.target.value + e.key;
-
+		findDottedPersonElementId("bio").innerHTML = inputField.value + e.key;
+		}
+	else {
+		inputField.value = "";
 	}
 })
 
-buildDom(people)
+buildDom(people);
