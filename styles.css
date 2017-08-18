@@ -1,0 +1,46 @@
+body {
+	background-color: #F1F0F0
+}
+
+#main {
+	width: 80%;
+	margin: 5% auto auto auto;
+}
+
+#container {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	margin-top: 5%;
+	margin-bottom: auto;
+	height: 100%;
+}
+.card {
+	background-color: white ;
+	height: auto;
+	width: 40%;
+	box-shadow: 2px 2px grey;
+	margin: 0 20px 20px 0;
+}
+
+h2 {
+	text-align: center;
+}
+
+.card img {
+	width: 50%;	
+
+}
+
+.blue {
+	background-color: lightblue;
+}
+
+.yellow {
+	background-color: lightyellow;
+}
+
+.dots {
+	border: 5px dotted lightgrey;
+}
