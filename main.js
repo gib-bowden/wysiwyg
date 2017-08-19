@@ -123,4 +123,11 @@ inputField.addEventListener("keypress",(e) => {
 	}
 })
 
+
+inputField.addEventListener("keydown",(e) => {
+	if (e.key === "Backspace" || e.key === "Delete") {
+		findDottedPersonElementId("bio").innerHTML = inputField.value + "";
+		}
+})
+
 buildDom(people);
