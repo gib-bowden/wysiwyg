@@ -48,7 +48,7 @@ function buildDom(arr) {
 								<h1>${person.title}</h1>
 								<h3>${person.name}</h3>
 								<img src="${person.image}">
-								<p id="bio">${person.bio}</p>
+								<p class="bio">${person.bio}</p>
 								<p>Birth: ${person.lifespan.birth} Death: ${person.lifespan.death}</p>
 							</div>`;
 		} 
@@ -63,18 +63,18 @@ function colorGenerator(num) {
 
 //returns a person div having the dots class 
 function findDottedPerson() {
-	for (let person of cardList) {
-		if (person.classList.contains("dots")) {
-			var dottedPerson = person;
+	for (var i = 0; i < cardList.length; i++) {
+		if (cardList[i].classList.contains("dots")) {
+			var dottedPerson = cardList[i];
 		}
 	} return dottedPerson;
 }
 
 //Finds the dotted person's element with the ID of a given string
-function findDottedPersonElementId(str) {
+function findDottedPersonElementsByClass(str) {
 	var personElements = findDottedPerson().children; //returns all the children elements of the dotted div
 	for (let element of personElements) {
-		if (element.id === str) {
+		if (element.classList.contains(str)) {
 			var targetElement = element;
 		}
 	} return targetElement;
@@ -93,7 +93,7 @@ container.addEventListener("click", (e) => {
 	inputField.focus();
 });
 
-//Event listener for for the input field when it loses focus
+//Event listener for the input field when it loses focus
 //Removes the dots border from a person div if exists 
 inputField.addEventListener("focusout", () => {
 	if (findDottedPerson() !== undefined) {
@@ -102,12 +102,15 @@ inputField.addEventListener("focusout", () => {
 	inputField.value = "";
 	})
 
+
+//Event listener for  the input field when it gains focus
+//finds the bio element within the dotted person
 inputField.addEventListener("focusin", () => {
 	if (findDottedPerson() === undefined) {
 		messageText.innerHTML = "Select a person to edit their bio";
 		inputField.disabled = true;
 		} else {
-			inputField.value = findDottedPersonElementId("bio").innerHTML
+			inputField.value = findDottedPersonElementsByClass("bio").innerHTML
 		}
 	})
 
@@ -116,11 +119,18 @@ inputField.addEventListener("focusin", () => {
 //If keystroke is enter -> clears the value in the input field 
 inputField.addEventListener("keypress",(e) => {
 	if (e.key !== "Enter") {
-		findDottedPersonElementId("bio").innerHTML = inputField.value + e.key;
+		findDottedPersonElementsByClass("bio").innerHTML = inputField.value + e.key;
 		}
 	else {
 		inputField.value = "";
 	}
+})
+
+
+inputField.addEventListener("keydown",(e) => {
+	if (e.key === "Backspace" || e.key === "Delete") {
+		findDottedPersonElementsByClass("bio").innerHTML = inputField.value + "";
+		}
 })
 
 buildDom(people);
