@@ -48,7 +48,7 @@ function buildDom(arr) {
 								<h1>${person.title}</h1>
 								<h3>${person.name}</h3>
 								<img src="${person.image}">
-								<p id="bio">${person.bio}</p>
+								<p class="bio">${person.bio}</p>
 								<p>Birth: ${person.lifespan.birth} Death: ${person.lifespan.death}</p>
 							</div>`;
 		} 
@@ -63,9 +63,9 @@ function colorGenerator(num) {
 
 //returns a person div having the dots class 
 function findDottedPerson() {
-	for (let person of cardList) {
-		if (person.classList.contains("dots")) {
-			var dottedPerson = person;
+	for (var i = 0; i < cardList.length; i++) {
+		if (cardList[i].classList.contains("dots")) {
+			var dottedPerson = cardList[i];
 		}
 	} return dottedPerson;
 }
@@ -74,7 +74,7 @@ function findDottedPerson() {
 function findDottedPersonElementId(str) {
 	var personElements = findDottedPerson().children; //returns all the children elements of the dotted div
 	for (let element of personElements) {
-		if (element.id === str) {
+		if (element.classList.contains(str)) {
 			var targetElement = element;
 		}
 	} return targetElement;
